@@ -1,0 +1,18 @@
+$primary-color: #666;
+$link-color: #222;
+
+@font-face {
+    font-family: 'DM Serif Display';
+    src: url('../../fonts/DMSerifDisplay-Regular.woff2') format('woff2'),
+        url('../../fonts/DMSerifDisplay-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DM Serif Display';
+    src: url('../../fonts/DMSerifDisplay-Italic.woff2') format('woff2'),
+        url('../../fonts/DMSerifDisplay-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}

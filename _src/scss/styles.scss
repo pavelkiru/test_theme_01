@@ -1,0 +1,13 @@
+// Here you can import all the scss you need
+@import 'components/_module1';
+
+body {
+	font-family: 'DM Serif Display';
+	color: $primary-color;
+
+	
+	a {
+		color: $link-color;
+		text-decoration: underline;
+	}
+}
