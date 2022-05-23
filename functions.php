@@ -120,7 +120,7 @@ add_action( 'widgets_init', 'asiermusa_widgets_init' );
  * Enqueue scripts and styles.
  */
 function asiermusa_scripts() {
-	
+
 	/**
    * Include webpack generated scripts
    *
@@ -129,7 +129,7 @@ function asiermusa_scripts() {
   $main = $manifest->main;
   wp_enqueue_style('theme-css', get_template_directory_uri() . "/dist" . $main->css,  false, null);
   wp_enqueue_script('theme-js', get_template_directory_uri() . "/dist" . $main->js, ['jquery'], null, true);
-  
+
 
 	wp_enqueue_style( 'asiermusa-style', get_stylesheet_uri() );
 
@@ -169,4 +169,7 @@ require get_template_directory() . '/inc/customizer.php';
 if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+
+require get_template_directory() . '/inc/function-admin.php';
 
