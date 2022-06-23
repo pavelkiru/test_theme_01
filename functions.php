@@ -143,19 +143,6 @@ function asiermusa_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'asiermusa_scripts' );
 
-
-
-function load_admin_style() {
-  wp_register_style( 'admin_css', get_template_directory_uri() . '/admin-style.css', false, '1.0.0' );
-  //OR
-  wp_enqueue_style( 'admin_css', get_template_directory_uri() . '/admin-style.css', false, '1.0.0' );
-}
-add_action( 'admin_enqueue_scripts', 'load_admin_style' );
-
-
-
-
-
 /**
  * Implement the Custom Header feature.
  */

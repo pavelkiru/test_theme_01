@@ -8,7 +8,6 @@
 
 function sunset_add_admin_page() {
 
-  // create admin menu page
   add_menu_page(
     'Sunset Theme Options',
     'Sunset',
@@ -19,39 +18,50 @@ function sunset_add_admin_page() {
     110
   );
 
-  // create admin first submenu page
   add_submenu_page(
     'alecaddd-sunset',
-    'First submenu',
-    'First submenu',
+    'Settings',
+    'Settings',
     'manage_options',
-    'alecaddd-sunset-first-submenu',
-    'sunset_theme_create_first_submenu',
-    1
+    'alecaddd-sunset-settings',
+    'sunset_theme_require_settings_page'
   );
 
-  // create admin second submenu page
-  add_submenu_page(
-    'alecaddd-sunset',
-    'Second submenu',
-    'Second submenu',
-    'manage_options',
-    'alecaddd-sunset-second-submenu',
-    'sunset_theme_create_second_submenu',
-    2
-  );
+  add_action('admin_init', 'sunset_create_settings_page');
+
+
 }
-
 add_action('admin_menu', 'sunset_add_admin_page');
 
-function sunset_theme_create_page() {
-  require_once get_template_directory() . '/inc/templates/sunset-admin.php';
+
+
+function sunset_create_settings_page() {
+  register_setting('sunset_settings_group','first_name');
+
+  add_settings_section(
+    'sunset-sidebar-options','Sidebar options','sunset_sidebar_options',
+    'alecaddd-sunset-settings'
+  );
+
+  add_settings_field('sidebar-name','First Name','sunset_sidebar_name',
+    'alecaddd-sunset-settings','sunset-sidebar-options'
+  );
 }
 
-function sunset_theme_create_first_submenu() {
-  require_once get_template_directory() . '/inc/templates/sunset-admin-first-submenu.php';
+function sunset_sidebar_name() {
+
+  $firstName = esc_attr(get_option('first_name'));
+  echo '<input type="text" name="first_name" value="'.$firstName.'" placeholder="First Name"/>';
 }
 
-function sunset_theme_create_second_submenu() {
-  require_once get_template_directory() . '/inc/templates/sunset-admin-second-submenu.php';
+
+function sunset_theme_create_page () {
+  // generate of our admin page
+  require_once get_template_directory() . '/inc/templates/sunset-admin-main-page.php';
+}
+
+
+
+function sunset_theme_require_settings_page() {
+  require_once get_template_directory() . '/inc/templates/sunset-admin-settings.php';
 }
