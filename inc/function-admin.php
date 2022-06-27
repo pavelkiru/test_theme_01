@@ -19,6 +19,7 @@ add_action('admin_menu', 'sunset_add_admin_page');
 
 
 function sunset_create_settings_page() {
+  register_setting('sunset_settings_group','profile_picture');
   register_setting('sunset_settings_group','first_name');
   register_setting('sunset_settings_group', 'last_name');
   register_setting('sunset_settings_group', 'description');
@@ -31,12 +32,30 @@ function sunset_create_settings_page() {
     'alecaddd-sunset-settings'
   );
 
+  add_settings_field('profile_picture','Picture','sunset_sidebar_picture','alecaddd-sunset-settings','sunset-sidebar-options');
   add_settings_field('sidebar-name','Full Name','sunset_sidebar_name','alecaddd-sunset-settings','sunset-sidebar-options');
   add_settings_field('sidebar-description','Description','sunset_sidebar_description','alecaddd-sunset-settings','sunset-sidebar-options');
   add_settings_field('sidebar-twitter','Twitter','sunset_sidebar_twitter','alecaddd-sunset-settings','sunset-sidebar-options');
   add_settings_field('sidebar-google','Google','sunset_sidebar_google','alecaddd-sunset-settings','sunset-sidebar-options');
   add_settings_field('sidebar-yandex','Yandex','sunset_sidebar_yandex','alecaddd-sunset-settings','sunset-sidebar-options');
 }
+
+function sunset_sidebar_picture() {
+  $profilePicture = esc_attr(get_option('profile_picture'));
+  if (!empty($profilePicture)) {
+  //  echo 'have data';
+    echo '<input type="button" class="button" name="profile_picture" value="Delete Image" id="delete_image"/>';
+  } else {
+  //  echo 'empty';
+
+  //  echo $profilePicture;
+    echo '<input type="button" class="button" value="Upload Profile Image" id="upload_profile_picture"/>
+          <input type="hidden" name="profile_picture" value="'.$profilePicture.'" id="get_url_picture"/>';
+  }
+
+
+
+  }
 
 function sunset_sidebar_name() {
   $firstName = esc_attr(get_option('first_name'));

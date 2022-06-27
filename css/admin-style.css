@@ -1,5 +1,29 @@
+.sunset_settings_page {
+
+}
 
 
-.description {
 
+.sunset_settings_page .sunset_info {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+
+}
+
+.sunset_info .title {
+    font-size: 28px;
+}
+
+.sunset_info .description {
+    font-size: 20px;
+}
+
+.url_picture {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
