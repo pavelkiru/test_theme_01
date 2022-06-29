@@ -21,14 +21,22 @@ jQuery(document).ready(function($){
 
             $('.url_picture').attr("src",image_url);
             $('#get_url_picture').val(image_url);
-            $('#upload_profile_picture').after( "<p class='description'>Don't forget to save!</p>" );
 
+
+
+            if ( !$("#button_upload_description")[0]) {
+                $('#upload_profile_picture').after( "<p class='description'id='button_upload_description'>Don't forget to save!</p>" );
+            }
         });
     })
 
     $('#delete_image').on('click', () => {
         $('.url_picture').attr('src',defaultImage)
-        $('#delete_image').after( "<p class='description'>Don't forget to save!</p>" );
+
+        if ( !$("#button_delete_description")[0]) {
+            $('#delete_image').after( "<p class='description' id='button_delete_description'>Don't forget to save!</p>" );
+        }
+
     })
 
     //
