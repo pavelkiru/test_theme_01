@@ -10,6 +10,7 @@ function sunset_add_admin_page() {
   add_menu_page('Sunset Theme Options','Sunset','manage_options','alecaddd-sunset','sunset_theme_create_page','dashicons-admin-site-alt',110);
 
   add_submenu_page('alecaddd-sunset','Settings','Settings','manage_options','alecaddd-sunset-settings','sunset_theme_create_settings_page');
+  add_submenu_page('alecaddd-sunset','Sunset Theme Options','Theme Options','manage_options','alecaddd-sunset-theme','sunset_theme_create_theme_support_page');
 
   add_action('admin_init', 'sunset_create_settings_page');
 }
@@ -19,18 +20,21 @@ add_action('admin_menu', 'sunset_add_admin_page');
 
 
 function sunset_create_settings_page() {
-  register_setting('sunset_settings_group','profile_picture');
-  register_setting('sunset_settings_group','first_name');
+  // settings
+  register_setting('sunset_settings_group', 'profile_picture');
+  register_setting('sunset_settings_group', 'first_name');
   register_setting('sunset_settings_group', 'last_name');
   register_setting('sunset_settings_group', 'description');
   register_setting('sunset_settings_group', 'twitter','sunset_sanitize_input_text');
   register_setting('sunset_settings_group', 'google','sunset_sanitize_input_text');
   register_setting('sunset_settings_group', 'yandex','sunset_sanitize_input_text');
 
-  add_settings_section(
-    'sunset-sidebar-options','Sidebar options','sunset_sidebar_options',
-    'alecaddd-sunset-settings'
-  );
+
+
+
+  add_settings_section('sunset-sidebar-options','Sidebar options','sunset_sidebar_options', 'alecaddd-sunset-settings');
+
+
 
   add_settings_field('profile_picture','Picture','sunset_sidebar_picture','alecaddd-sunset-settings','sunset-sidebar-options');
   add_settings_field('sidebar-name','Full Name','sunset_sidebar_name','alecaddd-sunset-settings','sunset-sidebar-options');
@@ -38,17 +42,21 @@ function sunset_create_settings_page() {
   add_settings_field('sidebar-twitter','Twitter','sunset_sidebar_twitter','alecaddd-sunset-settings','sunset-sidebar-options');
   add_settings_field('sidebar-google','Google','sunset_sidebar_google','alecaddd-sunset-settings','sunset-sidebar-options');
   add_settings_field('sidebar-yandex','Yandex','sunset_sidebar_yandex','alecaddd-sunset-settings','sunset-sidebar-options');
+
+
+  //theme options
+  register_setting('sunset_theme_support', 'post_formats','sunset_post_formats_callback');
+
+  add_settings_section('sunset-theme-options','Theme options','sunset_theme_options', 'alecaddd-sunset-theme');
+
+  add_settings_field('post_formats','Post Formats','sunset_theme_options_post_formats','alecaddd-sunset-theme','sunset-theme-options');
 }
 
 function sunset_sidebar_picture() {
   $profilePicture = esc_attr(get_option('profile_picture'));
   if (!empty($profilePicture)) {
-  //  echo 'have data';
     echo '<input type="button" class="button" name="profile_picture" value="Delete Image" id="delete_image"/>';
   } else {
-  //  echo 'empty';
-
-  //  echo $profilePicture;
     echo '<input type="button" class="button" value="Upload Profile Image" id="upload_profile_picture"/>
           <input type="hidden" name="profile_picture" value="'.$profilePicture.'" id="get_url_picture"/>';
   }
@@ -88,8 +96,6 @@ function sunset_sidebar_yandex() {
   <p class="description">Add your link/name without @</p>';
 }
 
-
-
 // * * *
 // Sinitize input data
 // * * *
@@ -100,6 +106,34 @@ function sunset_sanitize_input_text($input) {
 }
 
 // * * *
+// theme options
+// * * *
+function sunset_post_formats_callback($input) {
+  return $input;
+}
+
+function sunset_theme_options() {
+  echo 'Activate and Deactivate specific Theme Support Options';
+}
+
+function sunset_theme_options_post_formats() {
+  $options = get_option('post_formats');
+  $formats= ['aside', 'gallery', 'link','image', 'quote', 'status', 'video', 'audio', 'chat'];
+  $output = '';
+  foreach($formats as $format) {
+    $checked = @$options[$format] == 1 ? 'checked' : '';
+
+    $output .= '<label>
+                    <input type="checkbox" id="'.$format.'" name="post_formats['.$format.']" value="1" '.$checked.'>
+                    '. $format .'
+                </label>
+                <br>';
+
+  }
+  echo $output;
+}
+
+
 
 
 
@@ -115,3 +149,12 @@ function sunset_theme_create_page () {
 function sunset_theme_create_settings_page() {
   require_once get_template_directory() . '/inc/templates/sunset-admin-settings.php';
 }
+
+function sunset_theme_create_theme_support_page() {
+  require_once get_template_directory() . '/inc/templates/sunset-admin-theme-support.php';
+}
+
+// * * *
+//
+// * *
+
